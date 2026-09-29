@@ -24,14 +24,16 @@ env:
   HELIOS_HOST: helios.se.ifmo.ru
   HELIOS_PORT: "2222"
   TARGET_DIR: public_html/p2
-  # Канонический адрес — GitHub Pages; копия на Helios ссылается на него
-  # через rel=canonical и sitemap.xml (см. отчёт T5, раздел 4).
-  SITE_URL: https://excalibbur.github.io/p2-static-site/
 
 jobs:
   deploy:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
+    env:
+      # Сайт лежит в подкаталоге /~логин/p2/. Обычные страницы MkDocs используют
+      # относительные ссылки, но 404.html, rel=canonical и sitemap.xml строятся
+      # от site_url: с адресом GitHub Pages 404-страница на Helios ломается.
+      SITE_URL: https://se.ifmo.ru/~${{ vars.HELIOS_USER }}/p2/
     environment:
       name: helios
       url: https://se.ifmo.ru/~${{ vars.HELIOS_USER }}/p2/
