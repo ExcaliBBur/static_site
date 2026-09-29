@@ -1,0 +1,166 @@
+{
+  "builds": {
+    "mkdocs": {
+      "cold": [
+        0.9652092000469565,
+        0.8936338000930846,
+        0.875597900012508
+      ],
+      "cold_mean": 0.9114803000508497,
+      "incremental": [
+        0.9093770999461412,
+        0.9131565000861883,
+        0.9011257998645306
+      ],
+      "incremental_mean": 0.9078864666322867,
+      "output_bytes": 9854335,
+      "output_files": 62
+    },
+    "sphinx": {
+      "cold": [
+        2.0219982999842614,
+        2.0395324998535216,
+        2.0839044000022113
+      ],
+      "cold_mean": 2.048478399946665,
+      "incremental": [
+        2.756523200077936,
+        1.5319968000985682,
+        1.506382699823007
+      ],
+      "incremental_mean": 1.9316342333331704,
+      "output_bytes": 7962245,
+      "output_files": 64
+    }
+  },
+  "pages": {
+    "mkdocs": {
+      "desktop": {
+        "requests": 18,
+        "bytes": 7409700,
+        "bytes_by_type": {
+          "document": 52307,
+          "stylesheet": 153425,
+          "image": 70741,
+          "script": 7042847,
+          "xhr": 73715,
+          "other": 16665
+        },
+        "external_requests": 2,
+        "external_hosts": [
+          "api.github.com"
+        ],
+        "blocked": 0,
+        "load_s": 1.3225253000855446,
+        "math_rendered": 15,
+        "math_unrendered": 0,
+        "plotly_svg": 3,
+        "horizontal_overflow_px": 0,
+        "stacked_columns": 2
+      },
+      "mobile": {
+        "requests": 18,
+        "bytes": 7409700,
+        "bytes_by_type": {
+          "document": 52307,
+          "stylesheet": 153425,
+          "image": 70741,
+          "script": 7042847,
+          "xhr": 73715,
+          "other": 16665
+        },
+        "external_requests": 2,
+        "external_hosts": [
+          "api.github.com"
+        ],
+        "blocked": 0,
+        "load_s": 1.3518240000121295,
+        "math_rendered": 15,
+        "math_unrendered": 0,
+        "plotly_svg": 3,
+        "horizontal_overflow_px": 0,
+        "stacked_columns": 1
+      },
+      "offline_cdn": {
+        "requests": 16,
+        "bytes": 7407413,
+        "bytes_by_type": {
+          "document": 52307,
+          "stylesheet": 153425,
+          "image": 70741,
+          "script": 7042847,
+          "xhr": 71428,
+          "other": 16665
+        },
+        "external_requests": 0,
+        "external_hosts": [],
+        "blocked": 2,
+        "load_s": 0.7502627000212669,
+        "math_rendered": 15,
+        "math_unrendered": 0,
+        "plotly_svg": 3,
+        "horizontal_overflow_px": 0,
+        "stacked_columns": 2
+      }
+    },
+    "sphinx": {
+      "desktop": {
+        "requests": 16,
+        "bytes": 7199898,
+        "bytes_by_type": {
+          "document": 47985,
+          "stylesheet": 126296,
+          "script": 6954876,
+          "image": 70741
+        },
+        "external_requests": 0,
+        "external_hosts": [],
+        "blocked": 0,
+        "load_s": 1.2069445000961423,
+        "math_rendered": 8,
+        "math_unrendered": 0,
+        "plotly_svg": 3,
+        "horizontal_overflow_px": 0,
+        "stacked_columns": 2
+      },
+      "mobile": {
+        "requests": 16,
+        "bytes": 7199898,
+        "bytes_by_type": {
+          "document": 47985,
+          "stylesheet": 126296,
+          "image": 70741,
+          "script": 6954876
+        },
+        "external_requests": 0,
+        "external_hosts": [],
+        "blocked": 0,
+        "load_s": 0.7875026999972761,
+        "math_rendered": 8,
+        "math_unrendered": 0,
+        "plotly_svg": 3,
+        "horizontal_overflow_px": 0,
+        "stacked_columns": 1
+      },
+      "offline_cdn": {
+        "requests": 16,
+        "bytes": 7199898,
+        "bytes_by_type": {
+          "document": 47985,
+          "stylesheet": 126296,
+          "image": 70741,
+          "script": 6954876
+        },
+        "external_requests": 0,
+        "external_hosts": [],
+        "blocked": 0,
+        "load_s": 0.793022199999541,
+        "math_rendered": 8,
+        "math_unrendered": 0,
+        "plotly_svg": 3,
+        "horizontal_overflow_px": 0,
+        "stacked_columns": 2
+      }
+    }
+  }
+}

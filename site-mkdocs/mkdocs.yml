@@ -1,0 +1,110 @@
+site_name: "Публикация результатов экспериментов"
+site_description: "T5 и P2: публикуемость результатов и стресс-тест научного контента в генераторах статических сайтов"
+site_author: "ExcaliBBur"
+# Базовый URL задаётся из окружения: GitHub Pages и Helios публикуют сайт
+# по разным адресам (второй — в подкаталоге /~sXXXXXX/...).
+site_url: !ENV [SITE_URL, "http://127.0.0.1:8000/"]
+repo_url: !ENV [REPO_URL, "https://github.com/ExcaliBBur/p2-static-site"]
+edit_uri: ""
+copyright: "Текст — CC BY 4.0, код — MIT"
+
+# Файлы вида page.html вместо page/index.html: относительные ссылки из
+# сырого HTML (iframe) и работа сайта из подкаталога не зависят от сервера.
+use_directory_urls: false
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+theme:
+  name: material
+  language: ru
+  custom_dir: overrides
+  # Не подгружать Google Fonts: сайт не должен зависеть от внешних CDN.
+  font: false
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle: {icon: material/weather-night, name: "Тёмная тема"}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle: {icon: material/weather-sunny, name: "Светлая тема"}
+
+nav:
+  - Главная: index.md
+  - "P2. Стресс-тест": p2/stress-test.md
+  - Отчёт:
+      - "Ход работы": report/index.md
+      - "T5. Публикуемость и цитируемость": report/t5.md
+      - "P2. Сравнение генераторов": report/p2.md
+      - "Отладка": report/debugging.md
+      - "Вывод": report/conclusion.md
+  - Лицензии: license.md
+
+plugins:
+  - search:
+      lang: [ru, en]
+  - bibtex:
+      bib_file: ../references.bib
+
+markdown_extensions:
+  - abbr
+  - attr_list
+  - md_in_html
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
+  - admonition
+  - pymdownx.details
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: [snippets]
+      check_paths: true
+  - pymdownx.blocks.caption:
+      types:
+        - caption
+        - name: figure-caption
+          prefix: "Рисунок {}."
+        - name: table-caption
+          prefix: "Таблица {}."
+        - name: listing-caption
+          prefix: "Листинг {}."
+
+extra:
+  control_string: "p2-site-ok"
+  # Метаданные публикации для Highwire Press / Dublin Core / Open Graph (T5).
+  citation:
+    title: "Сравнение генераторов статических сайтов для публикации результатов экспериментов"
+    authors: ["ExcaliBBur"]
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+    date: "2026-09-29"
+    language: "ru"
+    publisher: "ИТМО"
+    license: "https://creativecommons.org/licenses/by/4.0/"
+
+extra_css:
+  - assets/css/extra.css
+
+extra_javascript:
+  - assets/js/mathjax-config.js
+  - assets/js/tex-svg.js

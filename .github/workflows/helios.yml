@@ -1,0 +1,77 @@
+# Выкладка того же сайта на Helios ИТМО (rsync по SSH с отдельным deploy-ключом).
+#
+# Настройки репозитория (Settings → Secrets and variables → Actions):
+#   secrets.HELIOS_SSH_KEY      — приватный deploy-ключ (ed25519, без пароля),
+#                                 публичная часть — в ~/.ssh/authorized_keys на Helios
+#   secrets.HELIOS_KNOWN_HOSTS  — вывод `ssh-keyscan -p 2222 helios.se.ifmo.ru`,
+#                                 сверенный с отпечатком, полученным по доверенному каналу
+#   vars.HELIOS_USER            — логин на Helios (sXXXXXX)
+name: helios
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: helios
+  cancel-in-progress: false
+
+env:
+  HELIOS_HOST: helios.se.ifmo.ru
+  HELIOS_PORT: "2222"
+  TARGET_DIR: public_html/p2
+  # Канонический адрес — GitHub Pages; копия на Helios ссылается на него
+  # через rel=canonical и sitemap.xml (см. отчёт T5, раздел 4).
+  SITE_URL: https://excalibbur.github.io/p2-static-site/
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    environment:
+      name: helios
+      url: https://se.ifmo.ru/~${{ vars.HELIOS_USER }}/p2/
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13.3"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - run: pip install -r requirements.txt
+
+      - name: Build MkDocs + Sphinx (strict)
+        run: python scripts/build_all.py
+
+      - name: Configure SSH (deploy key + pinned host key)
+        env:
+          SSH_KEY: ${{ secrets.HELIOS_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.HELIOS_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          install -m 600 /dev/null ~/.ssh/helios
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/helios
+          # Ключ хоста берётся из секрета, а не из ssh-keyscan в момент деплоя:
+          # так подмена сервера (MITM) приведёт к ошибке, а не к утечке сайта.
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Deploy with rsync
+        run: |
+          rsync -rlz --checksum --delete-after --delay-updates \
+            --chmod=D755,F644 \
+            -e "ssh -p $HELIOS_PORT -i ~/.ssh/helios -o StrictHostKeyChecking=yes -o IdentitiesOnly=yes" \
+            public/ "${{ vars.HELIOS_USER }}@$HELIOS_HOST:$TARGET_DIR/"
+
+      - name: Healthcheck
+        run: python scripts/check_site.py "https://se.ifmo.ru/~${{ vars.HELIOS_USER }}/p2/" --commit "${GITHUB_SHA::7}"
+
+      - name: Remove key
+        if: always()
+        run: rm -f ~/.ssh/helios

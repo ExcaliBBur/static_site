@@ -1,0 +1,19 @@
+/* Таблица с объединёнными ячейками (P2) */
+.results-table th, .results-table td { text-align: center; vertical-align: middle; }
+.md-typeset .results-table td[rowspan] { font-weight: 600; }
+
+/* Интерактивный график во встроенном фрейме */
+.plot-frame { width: 100%; height: 440px; border: 0; }
+
+/* Метка версии сборки */
+.build-info { font-size: .75rem; color: var(--md-default-fg-color--light); }
+
+
+/* Двухколоночный блок; на узком экране — одна колонка */
+.md-typeset .grid.two-col { grid-template-columns: 1fr 1fr; align-items: start; }
+@media (max-width: 44.9375em) {
+  .md-typeset .grid.two-col { grid-template-columns: 1fr; }
+}
+
+/* Широкая таблица прокручивается внутри блока, а не всей страницей */
+.table-wrap { overflow-x: auto; }

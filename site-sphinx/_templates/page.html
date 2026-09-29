@@ -1,0 +1,20 @@
+{% extends "!page.html" %}
+{#- T5: Highwire Press и Dublin Core (sphinxext-opengraph добавляет только Open Graph) -#}
+{% block extrahead %}
+  {{ super() }}
+  {%- set c = citation -%}
+  <meta name="citation_title" content="{{ c.title }}">
+  {%- for a in c.authors %}
+  <meta name="citation_author" content="{{ a }}">
+  <meta name="citation_author_orcid" content="{{ c.orcid }}">
+  {%- endfor %}
+  <meta name="citation_publication_date" content="{{ c.date | replace('-', '/') }}">
+  <meta name="citation_language" content="ru">
+  <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+  <meta name="DC.title" content="{{ title|striptags|e }}">
+  <meta name="DC.creator" content="{{ c.authors[0] }}">
+  <meta name="DC.date" content="{{ c.date }}">
+  <meta name="DC.language" content="ru">
+  <meta name="DC.rights" content="{{ c.license }}">
+  <link rel="license" href="{{ c.license }}">
+{% endblock %}

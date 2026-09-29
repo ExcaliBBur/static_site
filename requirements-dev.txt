@@ -1,0 +1,5 @@
+-r requirements.txt
+# Измерения P2 и сборка отчёта .docx
+playwright==1.63.0
+python-docx==1.2.0
+virtualenv==21.13.0

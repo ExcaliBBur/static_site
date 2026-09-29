@@ -1,0 +1,7 @@
+{
+  "version": "1.0",
+  "seed": 42,
+  "rows": 200,
+  "generator": "y = 3x + 2 + N(0, 0.5^2), x ~ U(0, 2)",
+  "sha256": "d4b31c5c525461802df32cbfd1f60b8421a1ae6edc9f348c2f2a67da7196439d"
+}

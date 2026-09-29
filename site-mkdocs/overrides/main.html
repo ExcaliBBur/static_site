@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{#- T5: метаданные публикации, которых нет в теме «из коробки».
+    Highwire Press (Google Scholar), Dublin Core и Open Graph задаются
+    переопределением блока extrahead без форка темы. -#}
+{% block extrahead %}
+  {%- set c = config.extra.citation -%}
+  {%- set page_title = page.title ~ " — " ~ config.site_name if page and page.title else config.site_name -%}
+  <meta name="citation_title" content="{{ c.title }}">
+  {%- for a in c.authors %}
+  <meta name="citation_author" content="{{ a }}">
+  <meta name="citation_author_orcid" content="{{ c.orcid }}">
+  {%- endfor %}
+  <meta name="citation_publication_date" content="{{ c.date | replace('-', '/') }}">
+  <meta name="citation_language" content="{{ c.language }}">
+  <meta name="citation_publisher" content="{{ c.publisher }}">
+  {%- if page and page.canonical_url %}
+  <meta name="citation_abstract_html_url" content="{{ page.canonical_url }}">
+  {%- endif %}
+  <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+  <meta name="DC.title" content="{{ page_title }}">
+  {%- for a in c.authors %}
+  <meta name="DC.creator" content="{{ a }}">
+  {%- endfor %}
+  <meta name="DC.date" content="{{ c.date }}">
+  <meta name="DC.language" content="{{ c.language }}">
+  <meta name="DC.rights" content="{{ c.license }}">
+  <meta name="DC.type" content="Text">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:description" content="{{ config.site_description }}">
+  <meta property="og:locale" content="ru_RU">
+  {%- if page and page.canonical_url %}
+  <meta property="og:url" content="{{ page.canonical_url }}">
+  {%- endif %}
+  <link rel="license" href="{{ c.license }}">
+{% endblock %}

@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Если вы используете эти материалы, пожалуйста, цитируйте их так."
+title: "Сравнение генераторов статических сайтов для публикации результатов экспериментов"
+type: software
+authors:
+  - alias: ExcaliBBur
+    # Замените на реальный ORCID автора перед созданием релиза в Zenodo.
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+version: 1.0.0
+date-released: "2026-09-29"
+license: MIT
+repository-code: "https://github.com/ExcaliBBur/p2-static-site"
+url: "https://excalibbur.github.io/p2-static-site/"
+keywords:
+  - static site generator
+  - MkDocs
+  - Sphinx
+  - reproducible research

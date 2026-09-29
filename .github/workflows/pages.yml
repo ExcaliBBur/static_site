@@ -1,0 +1,73 @@
+# Сборка обоих сайтов и публикация на GitHub Pages
+# официальной связкой upload-pages-artifact + deploy-pages (без ветки gh-pages).
+name: pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:          # только сборка: секретов и прав на деплой нет
+  workflow_dispatch:
+
+# Минимальные права по умолчанию; расширяются только в job deploy.
+permissions:
+  contents: read
+
+# Одновременно выполняется одна публикация; незавершённую не прерываем,
+# чтобы сайт не остался в промежуточном состоянии.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  SITE_URL: https://excalibbur.github.io/p2-static-site/
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      # Сторонние actions зафиксированы по SHA коммита (тег можно переписать).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13.3"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies (pinned)
+        run: pip install -r requirements.txt
+
+      - name: Build MkDocs + Sphinx (strict)
+        run: python scripts/build_all.py
+
+      - name: Healthcheck of the build output
+        run: |
+          python -m http.server 8000 --directory public >/dev/null 2>&1 &
+          sleep 2
+          python scripts/check_site.py http://127.0.0.1:8000/ --commit "${GITHUB_SHA::7}"
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: public
+
+  deploy:
+    # Публикация только из main; для PR и других веток — только build.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write      # развернуть артефакт на Pages
+      id-token: write   # OIDC-токен для подтверждения происхождения артефакта
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: scripts
+
+      - name: Healthcheck of the published site
+        run: python3 scripts/check_site.py "$SITE_URL" --commit "${GITHUB_SHA::7}" --wait-commit 180

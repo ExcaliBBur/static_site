@@ -1,0 +1,34 @@
+# Виртуальные окружения
+.venv/
+venv/
+# Кэш Python
+__pycache__/
+*.py[cod]
+.cache/
+# Результаты сборки
+site/
+_build/
+public/
+# Сгенерированный контент (scripts/prepare.py)
+site-mkdocs/docs/generated/
+site-mkdocs/docs/report/
+site-mkdocs/docs/assets/js/tex-svg.js
+site-mkdocs/snippets/
+site-sphinx/generated/
+site-sphinx/_generated/
+site-sphinx/_extra/generated/
+site-sphinx/_static/mathjax/
+site-sphinx/report/
+# Старый черновик (не входит в проект)
+/mkdocs/
+/sphinx/
+/measure.py
+/measurements.csv
+/P2_report.md
+/T5_report.md
+# IDE / ОС
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db
+.claude/
