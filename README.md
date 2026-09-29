@@ -2,6 +2,7 @@
 
 [![pages](https://github.com/ExcaliBBur/static_site/actions/workflows/pages.yml/badge.svg)](https://github.com/ExcaliBBur/static_site/actions/workflows/pages.yml)
 [![helios](https://github.com/ExcaliBBur/static_site/actions/workflows/helios.yml/badge.svg)](https://github.com/ExcaliBBur/static_site/actions/workflows/helios.yml)
+[![vps](https://github.com/ExcaliBBur/static_site/actions/workflows/vps.yml/badge.svg)](https://github.com/ExcaliBBur/static_site/actions/workflows/vps.yml)
 [![Content: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](LICENSE-CONTENT)
 [![Code: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
 
@@ -14,6 +15,7 @@
 | GitHub Pages, MkDocs + Material | https://excalibbur.github.io/static_site/ |
 | GitHub Pages, Sphinx + MyST | https://excalibbur.github.io/static_site/sphinx/ |
 | Helios ИТМО (зеркало) | https://se.ifmo.ru/~s335989/p2/ |
+| Собственный VPS (зеркало) | https://excalibbur.ru/static_site/ |
 
 ## Структура
 
@@ -28,7 +30,7 @@ scripts/build_docx.py отчёт в Word
 site-mkdocs/          MkDocs + Material (основной сайт)
 site-sphinx/          Sphinx + MyST + Furo
 vendor/mathjax/       локальная копия MathJax 3.2.2 (работа без CDN)
-.github/workflows/    pages.yml (GitHub Pages), helios.yml (rsync на Helios)
+.github/workflows/    pages.yml (GitHub Pages), helios.yml и vps.yml (rsync по SSH)
 ```
 
 ## Локальная сборка

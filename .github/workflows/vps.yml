@@ -1,0 +1,73 @@
+# Выкладка на собственный VPS (excalibbur.ru, Ubuntu 24.04, Nginx Proxy Manager).
+#
+# Файлы сайта лежат в /root/npm/data/static_site и отдаются NPM по адресу
+# https://excalibbur.ru/static_site/ (location в /data/nginx/custom/server_proxy.conf).
+#
+# Deploy-ключ в authorized_keys ограничен принудительной командой rrsync:
+#   restrict,command="/usr/bin/rrsync /root/npm/data/static_site/" ssh-ed25519 ...
+# Скомпрометированный ключ позволяет только перезаписать файлы сайта:
+# шелла, форвардинга портов и доступа к другим каталогам нет.
+#
+#   secrets.VPS_SSH_KEY      — приватный deploy-ключ
+#   secrets.VPS_KNOWN_HOSTS  — ED25519-ключ хоста excalibbur.ru (сверен с доверенным)
+name: vps
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vps
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    env:
+      SITE_URL: https://excalibbur.ru/static_site/
+    environment:
+      name: vps
+      url: https://excalibbur.ru/static_site/
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13.3"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - run: pip install -r requirements.txt
+
+      - name: Build MkDocs + Sphinx (strict)
+        run: python scripts/build_all.py
+
+      - name: Configure SSH (deploy key + pinned host key)
+        env:
+          SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          install -m 600 /dev/null ~/.ssh/vps
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/vps
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Deploy with rsync (rrsync on the server side)
+        run: |
+          # Путь назначения "./" — корень, разрешённый rrsync на сервере.
+          rsync -rlz --checksum --delete-after --delay-updates \
+            --chmod=D755,F644 \
+            -e "ssh -i ~/.ssh/vps -o StrictHostKeyChecking=yes -o IdentitiesOnly=yes" \
+            public/ root@excalibbur.ru:./
+
+      - name: Healthcheck
+        run: python scripts/check_site.py "$SITE_URL" --commit "${GITHUB_SHA::7}"
+
+      - name: Remove key
+        if: always()
+        run: rm -f ~/.ssh/vps
