@@ -1,0 +1,61 @@
+# Оценка Lighthouse для страниц P2 на опубликованном сайте.
+# Публичный PageSpeed Insights API без ключа упирается в суточную квоту,
+# поэтому Lighthouse запускается прямо на раннере с его Google Chrome.
+# Результат: таблица в Job Summary и аннотации (видны без входа в GitHub),
+# полные JSON-отчёты — артефакт lighthouse-reports.
+name: lighthouse
+
+on:
+  # После каждой успешной публикации на GitHub Pages и вручную
+  workflow_run:
+    workflows: [pages]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Базовый адрес сайта"
+        default: "https://excalibbur.github.io/static_site/"
+
+permissions:
+  contents: read
+
+env:
+  LIGHTHOUSE_VERSION: "13.5.0"
+
+jobs:
+  audit:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: scripts
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+
+      - name: Run Lighthouse (mobile + desktop, 2 generators)
+        env:
+          BASE: ${{ inputs.base_url || 'https://excalibbur.github.io/static_site/' }}
+        run: |
+          mkdir -p lh
+          for gen in mkdocs sphinx; do
+            path="p2/stress-test.html"; [ "$gen" = sphinx ] && path="sphinx/p2/stress-test.html"
+            for form in mobile desktop; do
+              preset=""; [ "$form" = desktop ] && preset="--preset=desktop"
+              npx --yes "lighthouse@$LIGHTHOUSE_VERSION" "$BASE$path" $preset \
+                --only-categories=performance,accessibility,best-practices,seo \
+                --chrome-flags="--headless=new --no-sandbox" \
+                --output=json --output-path="lh/${gen}_${form}.json" --quiet
+            done
+          done
+
+      - name: Summary
+        run: python3 scripts/lighthouse_summary.py lh "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: lighthouse-reports
+          path: lh/
