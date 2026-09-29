@@ -10,7 +10,7 @@
   * HTML не ссылается на внешние CDN в <script src> и <link href>.
 
 Использование:
-  python scripts/check_site.py https://excalibbur.github.io/p2-static-site/ [--commit abc1234]
+  python scripts/check_site.py https://excalibbur.github.io/static_site/ [--commit abc1234]
 Код возврата 1 при любой ошибке — job в CI завершается с ошибкой.
 """
 from __future__ import annotations

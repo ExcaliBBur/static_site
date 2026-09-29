@@ -1,7 +1,7 @@
 # Публикация результатов экспериментов: MkDocs vs Sphinx
 
-[![pages](https://github.com/ExcaliBBur/p2-static-site/actions/workflows/pages.yml/badge.svg)](https://github.com/ExcaliBBur/p2-static-site/actions/workflows/pages.yml)
-[![helios](https://github.com/ExcaliBBur/p2-static-site/actions/workflows/helios.yml/badge.svg)](https://github.com/ExcaliBBur/p2-static-site/actions/workflows/helios.yml)
+[![pages](https://github.com/ExcaliBBur/static_site/actions/workflows/pages.yml/badge.svg)](https://github.com/ExcaliBBur/static_site/actions/workflows/pages.yml)
+[![helios](https://github.com/ExcaliBBur/static_site/actions/workflows/helios.yml/badge.svg)](https://github.com/ExcaliBBur/static_site/actions/workflows/helios.yml)
 [![Content: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](LICENSE-CONTENT)
 [![Code: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
 
@@ -11,9 +11,9 @@
 
 | Площадка | Адрес |
 |---|---|
-| GitHub Pages, MkDocs + Material | https://excalibbur.github.io/p2-static-site/ |
-| GitHub Pages, Sphinx + MyST | https://excalibbur.github.io/p2-static-site/sphinx/ |
-| Helios ИТМО (зеркало) | https://se.ifmo.ru/~sXXXXXX/p2/ |
+| GitHub Pages, MkDocs + Material | https://excalibbur.github.io/static_site/ |
+| GitHub Pages, Sphinx + MyST | https://excalibbur.github.io/static_site/sphinx/ |
+| Helios ИТМО (зеркало) | https://se.ifmo.ru/~s335989/p2/ |
 
 ## Структура
 

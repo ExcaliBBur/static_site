@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  SITE_URL: https://excalibbur.github.io/p2-static-site/
+  SITE_URL: https://excalibbur.github.io/static_site/
 
 jobs:
   build:

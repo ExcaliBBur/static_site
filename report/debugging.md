@@ -148,7 +148,7 @@ MkDocs, хотя MathJax, Plotly и шрифты локальные.
 **Гипотеза:** запросы делает тема, а не контент.
 
 **Проверка:** в журнале запросов Playwright — два обращения к
-`api.github.com/repos/ExcaliBBur/p2-static-site`; их инициирует компонент
+`api.github.com/repos/ExcaliBBur/static_site`; их инициирует компонент
 «source» темы Material, если задан `repo_url`.
 
 **Решение.** Оставлено сознательно: запрос необязателен (без него не

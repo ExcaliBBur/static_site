@@ -9,8 +9,8 @@ authors:
 version: 1.0.0
 date-released: "2026-09-29"
 license: MIT
-repository-code: "https://github.com/ExcaliBBur/p2-static-site"
-url: "https://excalibbur.github.io/p2-static-site/"
+repository-code: "https://github.com/ExcaliBBur/static_site"
+url: "https://excalibbur.github.io/static_site/"
 keywords:
   - static site generator
   - MkDocs

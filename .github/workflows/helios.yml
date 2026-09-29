@@ -3,7 +3,7 @@
 # Настройки репозитория (Settings → Secrets and variables → Actions):
 #   secrets.HELIOS_SSH_KEY      — приватный deploy-ключ (ed25519, без пароля),
 #                                 публичная часть — в ~/.ssh/authorized_keys на Helios
-#   secrets.HELIOS_KNOWN_HOSTS  — вывод `ssh-keyscan -p 2222 helios.se.ifmo.ru`,
+#   secrets.HELIOS_KNOWN_HOSTS  — вывод `ssh-keyscan -p 2222 se.ifmo.ru`,
 #                                 сверенный с отпечатком, полученным по доверенному каналу
 #   vars.HELIOS_USER            — логин на Helios (sXXXXXX)
 name: helios
@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  HELIOS_HOST: helios.se.ifmo.ru
+  HELIOS_HOST: se.ifmo.ru
   HELIOS_PORT: "2222"
   TARGET_DIR: public_html/p2
 
