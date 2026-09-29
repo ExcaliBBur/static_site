@@ -13,6 +13,8 @@ public/
 site-mkdocs/docs/generated/
 site-mkdocs/docs/report/
 site-mkdocs/docs/assets/js/tex-svg.js
+site-mkdocs/docs/assets/fonts/
+site-sphinx/_static/fonts/
 site-mkdocs/snippets/
 site-sphinx/generated/
 site-sphinx/_generated/

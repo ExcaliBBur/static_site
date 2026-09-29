@@ -1,3 +1,43 @@
 .plot-frame { width: 100%; height: 440px; border: 0; }
-.build-info { font-size: .8rem; opacity: .75; }
+.build-info { font-size: .8rem; opacity: .85; }
 table.results-table td, table.results-table th { text-align: center; vertical-align: middle; }
+
+/* Оформление в тон сайту MkDocs: заголовки Unbounded, жёлтая черта под h2 */
+h1, h2, h3, .sidebar-brand-text { letter-spacing: -.01em; }
+h1 { font-weight: 700; }
+h2 { font-weight: 600; }
+h2::after {
+  content: "";
+  display: block;
+  width: 2.2rem;
+  height: .22rem;
+  margin-top: .35rem;
+  border-radius: 2px;
+  background: #f0b400;
+}
+.sidebar-brand-text { font-family: var(--font-stack--headings); font-weight: 600; font-size: 1.05rem; line-height: 1.25; overflow-wrap: normal; word-break: normal; hyphens: manual; }
+
+/* Скруглённые таблицы и код */
+table.docutils { border-radius: .5rem; overflow: hidden; }
+div.highlight, .highlight pre { border-radius: .5rem; }
+
+/* Номер в подписи («Рисунок 1», «Таблица 1») — фиолетовым */
+.caption-number { color: #5f3dc4; font-weight: 600; }
+body[data-theme="dark"] .caption-number { color: #b69cff; }
+@media (prefers-color-scheme: dark) {
+  body:not([data-theme="light"]) .caption-number { color: #b69cff; }
+}
+
+/* Карточки sphinx-design на главной */
+.sd-card { border-radius: .75rem !important; border-width: 2px !important; transition: border-color .15s, transform .15s; }
+.sd-card:hover { border-color: #f0b400 !important; transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) {
+  .sd-card { transition: none; }
+  .sd-card:hover { transform: none; }
+}
+
+/* На телефоне широкий Unbounded крупноват */
+@media (max-width: 46em) {
+  h1 { font-size: 1.9rem; }
+  h2 { font-size: 1.4rem; }
+}

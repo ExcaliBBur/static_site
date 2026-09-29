@@ -44,7 +44,61 @@ html_theme = "furo"
 html_title = project
 html_static_path = ["_static"]
 html_extra_path = ["_extra"]
-html_css_files = ["extra.css"]
+html_css_files = ["fonts/fonts.css", "extra.css"]
+
+# Та же палитра, что у MkDocs («подсолнух + малина»), через CSS-переменные Furo.
+_HEADINGS = '"Unbounded", "Golos Text", -apple-system, "Segoe UI", sans-serif'
+_BODY = '"Golos Text", -apple-system, "Segoe UI", Roboto, sans-serif'
+html_theme_options = {
+    "light_css_variables": {
+        "font-stack": _BODY,
+        "font-stack--headings": _HEADINGS,
+        "color-brand-primary": "#221a33",
+        "color-brand-content": "#c2255c",
+        "color-brand-visited": "#8f1a44",
+        "color-sidebar-background": "#ffd23f",
+        "color-header-background": "#ffd23f",
+        "color-header-text": "#221a33",
+        "color-header-border": "#f0b400",
+        "color-sidebar-background-border": "#f0b400",
+        "color-sidebar-link-text": "#221a33",
+        "color-sidebar-link-text--top-level": "#221a33",
+        "color-sidebar-caption-text": "#5f3dc4",
+        "color-sidebar-item-background--hover": "#ffe27f",
+        "color-sidebar-search-background": "#fff4c7",
+        "color-sidebar-search-border": "#f0b400",
+        "color-code-background": "#fff4c7",
+        "color-inline-code-background": "#fff4c7",
+        "color-table-header-background": "#fff4c7",
+        "color-highlighted-background": "#ffe27f",
+        "color-admonition-title-background--note": "#fff4c7",
+    },
+    "dark_css_variables": {
+        "font-stack": _BODY,
+        "font-stack--headings": _HEADINGS,
+        "color-brand-primary": "#ffd23f",
+        "color-brand-content": "#ff8fb3",
+        "color-brand-visited": "#ffc2d6",
+        "color-background-primary": "#1b1528",
+        "color-background-secondary": "#221a33",
+        "color-sidebar-background": "#2b2146",
+        "color-header-background": "#2b2146",
+        "color-header-text": "#ffd23f",
+        "color-header-border": "#3a2d5c",
+        "color-sidebar-background-border": "#3a2d5c",
+        "color-sidebar-link-text": "#f1ecfa",
+        "color-sidebar-link-text--top-level": "#ffd23f",
+        "color-sidebar-caption-text": "#b69cff",
+        "color-sidebar-item-background--hover": "#3a2d5c",
+        "color-sidebar-search-background": "#1b1528",
+        "color-sidebar-search-border": "#3a2d5c",
+        "color-sidebar-search-foreground": "#f1ecfa",
+        "color-code-background": "#2e2645",
+        "color-inline-code-background": "#2e2645",
+        "color-table-header-background": "#2e2645",
+        "color-highlighted-background": "#4a3a12",
+    },
+}
 html_last_updated_fmt = "%Y-%m-%d"
 # Базовый URL задаётся из окружения (GitHub Pages / Helios), нужен sitemap и og:url.
 html_baseurl = os.environ.get("SPHINX_BASEURL", "http://127.0.0.1:8001/")

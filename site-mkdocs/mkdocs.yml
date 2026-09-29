@@ -31,14 +31,17 @@ theme:
     - search.highlight
     - content.code.copy
     - toc.follow
+  # Цвета заданы в assets/css/theme.css (primary/accent: custom)
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
+      primary: custom
+      accent: custom
       toggle: {icon: material/weather-night, name: "Тёмная тема"}
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
+      primary: custom
+      accent: custom
       toggle: {icon: material/weather-sunny, name: "Светлая тема"}
 
 nav:
@@ -103,6 +106,8 @@ extra:
     license: "https://creativecommons.org/licenses/by/4.0/"
 
 extra_css:
+  - assets/fonts/fonts.css
+  - assets/css/theme.css
   - assets/css/extra.css
 
 # defer: MathJax (2 МБ) не должен блокировать первую отрисовку страницы;

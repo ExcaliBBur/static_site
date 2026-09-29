@@ -30,6 +30,7 @@ scripts/build_docx.py отчёт в Word
 site-mkdocs/          MkDocs + Material (основной сайт)
 site-sphinx/          Sphinx + MyST + Furo
 vendor/mathjax/       локальная копия MathJax 3.2.2 (работа без CDN)
+vendor/fonts/         шрифты Golos Text и Unbounded (woff2, OFL) для собственной темы
 .github/workflows/    pages.yml (GitHub Pages), helios.yml и vps.yml (rsync по SSH)
 ```
 

@@ -245,6 +245,14 @@ def reset(path: Path) -> Path:
     return path
 
 
+def copy_fonts(dst: Path) -> None:
+    """Локальные шрифты (woff2 + fonts.css) — сайт не обращается к Google Fonts."""
+    dst.mkdir(parents=True, exist_ok=True)
+    for f in (ROOT / "vendor" / "fonts").iterdir():
+        if f.suffix in (".woff2", ".css"):
+            shutil.copy2(f, dst)
+
+
 def copy_tree(src: Path, dst: Path) -> None:
     if dst.exists():
         shutil.rmtree(dst)
@@ -264,6 +272,7 @@ def main() -> None:
     (mk_snip / "build_info.md").write_text(build_info_md(info), encoding="utf-8")
     (MK / "docs" / "assets" / "js").mkdir(parents=True, exist_ok=True)
     shutil.copy2(ROOT / "vendor" / "mathjax" / "tex-svg.js", MK / "docs" / "assets" / "js")
+    copy_fonts(MK / "docs" / "assets" / "fonts")
     copy_tree(ROOT / "report", MK / "docs" / "report")
 
     # --- Sphinx ---
@@ -277,6 +286,7 @@ def main() -> None:
     (sx_inc / "build_info.md").write_text(build_info_md(info), encoding="utf-8")
     (SX / "_static" / "mathjax").mkdir(parents=True, exist_ok=True)
     shutil.copy2(ROOT / "vendor" / "mathjax" / "tex-svg.js", SX / "_static" / "mathjax")
+    copy_fonts(SX / "_static" / "fonts")
     copy_tree(ROOT / "report", SX / "report")
 
     summary = {

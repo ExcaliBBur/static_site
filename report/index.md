@@ -69,6 +69,7 @@ scripts/build_docx.py этот отчёт в формате Word
 site-mkdocs/          MkDocs + Material (основной сайт, публикуется в корень)
 site-sphinx/          Sphinx + MyST + Furo (публикуется в /sphinx/)
 vendor/mathjax/       локальная копия MathJax 3.2.2
+vendor/fonts/         шрифты Golos Text и Unbounded (woff2, OFL)
 .github/workflows/    pages.yml, helios.yml, vps.yml
 ```
 
@@ -323,6 +324,7 @@ Pages: раннеры GitHub находятся за рубежом, а скри
 | Код | MIT | `LICENSE` |
 | Данные | CC0 1.0 | `data/LICENSE` |
 | MathJax (вендорная копия) | Apache 2.0 | `vendor/mathjax/LICENSE` |
+| Шрифты Golos Text, Unbounded | SIL OFL 1.1 | `vendor/fonts/LICENSE-*.txt` |
 
 Сведения для цитирования — `CITATION.cff`. На сайтах есть страница
 «Лицензии» и машиночитаемая ссылка `<link rel="license">`.

@@ -1,0 +1,138 @@
+/* Собственная тема поверх Material: «подсолнух + малина».
+   Цвета заданы токенами и переопределяют переменные Material,
+   поэтому шаблоны темы не форкаются. Шрифты — локальные (fonts.css). */
+
+:root {
+  --sun: #ffd23f;          /* шапка, подсветки */
+  --sun-soft: #fff4c7;     /* фон таблиц, кода */
+  --sun-deep: #f0b400;
+  --berry: #c2255c;        /* ссылки, акцент */
+  --berry-hover: #8f1a44;
+  --ink: #221a33;          /* текст на жёлтом */
+  --grape: #5f3dc4;        /* вторичный акцент: номера, подписи */
+
+  --md-text-font: "Golos Text";
+  --md-primary-fg-color: var(--sun);
+  --md-primary-fg-color--light: #ffe27f;
+  --md-primary-fg-color--dark: var(--sun-deep);
+  --md-primary-bg-color: var(--ink);
+  --md-primary-bg-color--light: rgba(34, 26, 51, .7);
+  --md-accent-fg-color: var(--berry);
+  --md-accent-fg-color--transparent: rgba(194, 37, 92, .1);
+  --md-typeset-a-color: var(--berry);
+}
+
+[data-md-color-scheme="default"] {
+  /* Material задаёт цвет ссылок внутри схемы, поэтому переопределяем здесь */
+  --md-typeset-a-color: var(--berry);
+  --md-accent-fg-color: var(--berry);
+  --md-default-bg-color: #ffffff;
+  --md-code-bg-color: var(--sun-soft);
+  --md-typeset-mark-color: rgba(255, 210, 63, .55);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-hue: 262;                       /* фиолетовый оттенок фона slate */
+  --sun-soft: #2e2645;
+  --berry: #ff8fb3;
+  --berry-hover: #ffc2d6;
+  --grape: #b69cff;
+  --md-primary-fg-color: #2b2146;
+  --md-primary-fg-color--light: #3a2d5c;
+  --md-primary-fg-color--dark: #1f1733;
+  --md-primary-bg-color: var(--sun);
+  --md-primary-bg-color--light: rgba(255, 210, 63, .75);
+  --md-accent-fg-color: var(--berry);
+  --md-typeset-a-color: var(--berry);
+  --md-code-bg-color: var(--sun-soft);
+}
+
+/* Заголовки — Unbounded */
+.md-header__topic,
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  font-family: "Unbounded", "Golos Text", -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: -.01em;
+}
+.md-typeset h1 { font-weight: 700; color: var(--md-default-fg-color); }
+.md-typeset h2 { font-weight: 600; }
+.md-typeset h3 { font-weight: 500; }
+.md-typeset h2::after {                 /* короткая жёлтая «подчёркивалка» */
+  content: "";
+  display: block;
+  width: 2.2rem;
+  height: .22rem;
+  margin-top: .35rem;
+  border-radius: 2px;
+  background: var(--sun-deep);
+}
+
+.md-typeset a:hover { color: var(--berry-hover); }
+
+/* Таблицы: жёлтая шапка, скруглённый контейнер */
+.md-typeset table:not([class]),
+.md-typeset .results-table {
+  border-radius: .5rem;
+  overflow: hidden;
+  border: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-typeset table:not([class]) th,
+.md-typeset .results-table th {
+  background: var(--sun-soft);
+  color: var(--md-default-fg-color);
+}
+
+/* Подписи к рисункам/таблицам: номер — фиолетовым */
+.md-typeset figcaption { font-style: normal; color: var(--md-default-fg-color--light); }
+.md-typeset figcaption .caption-prefix,
+.md-typeset figcaption span:first-child { color: var(--grape); font-weight: 600; }
+
+/* Карточки на главной */
+.md-typeset .grid.cards > ul > li {
+  border-radius: .75rem;
+  border: 2px solid var(--md-default-fg-color--lightest);
+  transition: border-color .15s, transform .15s;
+}
+.md-typeset .grid.cards > ul > li:hover {
+  border-color: var(--sun-deep);
+  transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .grid.cards > ul > li { transition: none; }
+  .md-typeset .grid.cards > ul > li:hover { transform: none; }
+}
+
+/* Двухколоночный блок — мягкая плашка */
+.md-typeset .grid.two-col > div {
+  background: var(--sun-soft);
+  border-radius: .75rem;
+  padding: .2rem 1rem;
+}
+
+/* Блоки кода чуть скруглены */
+.md-typeset pre > code { border-radius: .5rem; }
+
+/* Метка версии — «бейдж» */
+.build-info p {
+  display: inline-block;
+  background: var(--sun-soft);
+  border-radius: 999px;
+  padding: .15rem .8rem;
+}
+
+/* Ссылки \eqref внутри формул MathJax (SVG) — цветом ссылок, а не синим по умолчанию */
+/* MathJax красит ссылки правилом mjx-container[jax="SVG"] a { fill: blue; stroke: blue }
+   и вставляет его после наших стилей — нужна большая специфичность. */
+.md-typeset mjx-container[jax="SVG"] a {
+  color: var(--md-typeset-a-color);
+  fill: var(--md-typeset-a-color);
+  stroke: var(--md-typeset-a-color);
+}
+.md-typeset mjx-container a rect { fill: none; }   /* невидимая зона клика MathJax */
+
+/* На телефоне широкий Unbounded крупноват */
+@media (max-width: 44.9375em) {
+  .md-typeset h1 { font-size: 1.7em; }
+  .md-typeset h2 { font-size: 1.3em; }
+}

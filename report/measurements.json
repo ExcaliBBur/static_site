@@ -2,48 +2,49 @@
   "builds": {
     "mkdocs": {
       "cold": [
-        1.5888795999344438,
-        0.9725022001657635,
-        0.9602504000067711
+        1.0445488998666406,
+        1.0172449999954551,
+        1.0046536999288946
       ],
-      "cold_mean": 1.1738774000356595,
+      "cold_mean": 1.02214919993033,
       "incremental": [
-        0.9845565999858081,
-        0.9728099999483675,
-        0.9740313000511378
+        1.021619000006467,
+        1.0197937998455018,
+        1.0308894999325275
       ],
-      "incremental_mean": 0.9771326333284378,
-      "output_bytes": 18213362,
-      "output_files": 76
+      "incremental_mean": 1.024100766594832,
+      "output_bytes": 13494289,
+      "output_files": 82
     },
     "sphinx": {
       "cold": [
-        2.383440500125289,
-        2.407268400071189,
-        2.4349410999566317
+        2.464344499865547,
+        2.3810682999901474,
+        2.411496700020507
       ],
-      "cold_mean": 2.4085500000510365,
+      "cold_mean": 2.418969833292067,
       "incremental": [
-        2.6603229998145252,
-        1.5567270000465214,
-        1.570264299865812
+        2.701593300094828,
+        1.601406600093469,
+        1.6844697000924498
       ],
-      "incremental_mean": 1.9291047665756196,
-      "output_bytes": 16658670,
-      "output_files": 77
+      "incremental_mean": 1.9958232000935823,
+      "output_bytes": 11968138,
+      "output_files": 82
     }
   },
   "pages": {
     "mkdocs": {
       "desktop": {
-        "requests": 18,
-        "bytes": 7558926,
+        "requests": 24,
+        "bytes": 7710708,
         "bytes_by_type": {
-          "document": 52362,
-          "stylesheet": 153703,
+          "document": 52678,
+          "stylesheet": 160608,
           "image": 70741,
           "script": 7042847,
-          "xhr": 222608,
+          "font": 142276,
+          "xhr": 224893,
           "other": 16665
         },
         "external_requests": 2,
@@ -51,7 +52,7 @@
           "api.github.com"
         ],
         "blocked": 0,
-        "load_s": 1.259254700038582,
+        "load_s": 1.3150146000552922,
         "math_rendered": 15,
         "math_unrendered": 0,
         "plotly_svg": 3,
@@ -59,14 +60,15 @@
         "stacked_columns": 2
       },
       "mobile": {
-        "requests": 18,
-        "bytes": 7558928,
+        "requests": 24,
+        "bytes": 7710708,
         "bytes_by_type": {
-          "document": 52362,
-          "stylesheet": 153703,
+          "document": 52678,
+          "stylesheet": 160608,
           "image": 70741,
           "script": 7042847,
-          "xhr": 222610,
+          "font": 142276,
+          "xhr": 224893,
           "other": 16665
         },
         "external_requests": 2,
@@ -74,7 +76,7 @@
           "api.github.com"
         ],
         "blocked": 0,
-        "load_s": 0.8146328998263925,
+        "load_s": 0.8049997999332845,
         "math_rendered": 15,
         "math_unrendered": 0,
         "plotly_svg": 3,
@@ -82,20 +84,21 @@
         "stacked_columns": 1
       },
       "offline_cdn": {
-        "requests": 16,
-        "bytes": 7556535,
+        "requests": 22,
+        "bytes": 7707010,
         "bytes_by_type": {
-          "document": 52362,
-          "stylesheet": 153703,
+          "document": 52678,
+          "stylesheet": 160608,
           "image": 70741,
           "script": 7042847,
-          "xhr": 220217,
+          "font": 142276,
+          "xhr": 221195,
           "other": 16665
         },
         "external_requests": 0,
         "external_hosts": [],
         "blocked": 2,
-        "load_s": 1.308693700004369,
+        "load_s": 0.7450731000863016,
         "math_rendered": 15,
         "math_unrendered": 0,
         "plotly_svg": 3,
@@ -105,18 +108,19 @@
     },
     "sphinx": {
       "desktop": {
-        "requests": 16,
-        "bytes": 7199991,
+        "requests": 21,
+        "bytes": 7348773,
         "bytes_by_type": {
-          "document": 48078,
-          "stylesheet": 126296,
+          "document": 51344,
+          "stylesheet": 129536,
+          "image": 70741,
           "script": 6954876,
-          "image": 70741
+          "font": 142276
         },
         "external_requests": 0,
         "external_hosts": [],
         "blocked": 0,
-        "load_s": 1.2043141999747604,
+        "load_s": 1.3140895999968052,
         "math_rendered": 8,
         "math_unrendered": 0,
         "plotly_svg": 3,
@@ -124,18 +128,19 @@
         "stacked_columns": 2
       },
       "mobile": {
-        "requests": 16,
-        "bytes": 7199991,
+        "requests": 21,
+        "bytes": 7348773,
         "bytes_by_type": {
-          "document": 48078,
-          "stylesheet": 126296,
+          "document": 51344,
+          "stylesheet": 129536,
           "image": 70741,
-          "script": 6954876
+          "script": 6954876,
+          "font": 142276
         },
         "external_requests": 0,
         "external_hosts": [],
         "blocked": 0,
-        "load_s": 0.783585499972105,
+        "load_s": 0.7875161999836564,
         "math_rendered": 8,
         "math_unrendered": 0,
         "plotly_svg": 3,
@@ -143,18 +148,19 @@
         "stacked_columns": 1
       },
       "offline_cdn": {
-        "requests": 16,
-        "bytes": 7199991,
+        "requests": 21,
+        "bytes": 7348773,
         "bytes_by_type": {
-          "document": 48078,
-          "stylesheet": 126296,
+          "document": 51344,
+          "stylesheet": 129536,
           "image": 70741,
-          "script": 6954876
+          "script": 6954876,
+          "font": 142276
         },
         "external_requests": 0,
         "external_hosts": [],
         "blocked": 0,
-        "load_s": 0.7982193999923766,
+        "load_s": 0.8371031999122351,
         "math_rendered": 8,
         "math_unrendered": 0,
         "plotly_svg": 3,
