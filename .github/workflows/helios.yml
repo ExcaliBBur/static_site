@@ -57,6 +57,9 @@ jobs:
           SSH_KEY: ${{ secrets.HELIOS_SSH_KEY }}
           KNOWN_HOSTS: ${{ secrets.HELIOS_KNOWN_HOSTS }}
         run: |
+          # Пустой секрет иначе проявится позже как невнятный exit code 255 от ssh.
+          test -n "$SSH_KEY" || { echo "::error::secret HELIOS_SSH_KEY is empty"; exit 1; }
+          test -n "$KNOWN_HOSTS" || { echo "::error::secret HELIOS_KNOWN_HOSTS is empty"; exit 1; }
           install -d -m 700 ~/.ssh
           install -m 600 /dev/null ~/.ssh/helios
           printf '%s\n' "$SSH_KEY" > ~/.ssh/helios
