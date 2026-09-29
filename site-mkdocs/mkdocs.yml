@@ -105,6 +105,11 @@ extra:
 extra_css:
   - assets/css/extra.css
 
+# defer: MathJax (2 МБ) не должен блокировать первую отрисовку страницы;
+# без него Lighthouse (mobile) показывал FCP 9,5 с. Порядок выполнения
+# defer-скриптов сохраняется, поэтому конфигурация применяется до загрузки.
 extra_javascript:
-  - assets/js/mathjax-config.js
-  - assets/js/tex-svg.js
+  - path: assets/js/mathjax-config.js
+    defer: true
+  - path: assets/js/tex-svg.js
+    defer: true
