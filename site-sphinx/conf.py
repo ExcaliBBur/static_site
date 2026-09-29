@@ -2,8 +2,8 @@
 import os
 
 project = "Публикация результатов экспериментов"
-author = "ExcaliBBur"
-copyright = "2026, ExcaliBBur. Текст — CC BY 4.0, код — MIT"
+author = "Павлов Александр Сергеевич"
+copyright = "2026, Павлов Александр Сергеевич. Текст — CC BY 4.0, код — MIT"
 language = "ru"
 
 extensions = [
@@ -57,7 +57,7 @@ ogp_social_cards = {"enable": False}
 html_context = {
     "citation": {
         "title": "Сравнение генераторов статических сайтов для публикации результатов экспериментов",
-        "authors": ["ExcaliBBur"],
+        "authors": ["Павлов, Александр Сергеевич"],
         "orcid": "https://orcid.org/0000-0000-0000-0000",
         "date": "2026-09-29",
         "license": "https://creativecommons.org/licenses/by/4.0/",

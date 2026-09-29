@@ -3,7 +3,10 @@ message: "Если вы используете эти материалы, пож
 title: "Сравнение генераторов статических сайтов для публикации результатов экспериментов"
 type: software
 authors:
-  - alias: ExcaliBBur
+  - family-names: Павлов
+    given-names: Александр Сергеевич
+    alias: ExcaliBBur
+    affiliation: "Университет ИТМО, группа Р4209"
     # Замените на реальный ORCID автора перед созданием релиза в Zenodo.
     orcid: "https://orcid.org/0000-0000-0000-0000"
 version: 1.0.0

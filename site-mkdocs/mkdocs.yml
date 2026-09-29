@@ -1,12 +1,12 @@
 site_name: "Публикация результатов экспериментов"
 site_description: "T5 и P2: публикуемость результатов и стресс-тест научного контента в генераторах статических сайтов"
-site_author: "ExcaliBBur"
+site_author: "Павлов Александр Сергеевич"
 # Базовый URL задаётся из окружения: GitHub Pages и Helios публикуют сайт
 # по разным адресам (второй — в подкаталоге /~sXXXXXX/...).
 site_url: !ENV [SITE_URL, "http://127.0.0.1:8000/"]
 repo_url: !ENV [REPO_URL, "https://github.com/ExcaliBBur/static_site"]
 edit_uri: ""
-copyright: "Текст — CC BY 4.0, код — MIT"
+copyright: "© 2026 Павлов Александр Сергеевич. Текст — CC BY 4.0, код — MIT"
 
 # Файлы вида page.html вместо page/index.html: относительные ссылки из
 # сырого HTML (iframe) и работа сайта из подкаталога не зависят от сервера.
@@ -95,7 +95,7 @@ extra:
   # Метаданные публикации для Highwire Press / Dublin Core / Open Graph (T5).
   citation:
     title: "Сравнение генераторов статических сайтов для публикации результатов экспериментов"
-    authors: ["ExcaliBBur"]
+    authors: ["Павлов, Александр Сергеевич"]
     orcid: "https://orcid.org/0000-0000-0000-0000"
     date: "2026-09-29"
     language: "ru"

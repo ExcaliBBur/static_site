@@ -19,13 +19,6 @@ site-sphinx/_generated/
 site-sphinx/_extra/generated/
 site-sphinx/_static/mathjax/
 site-sphinx/report/
-# Старый черновик (не входит в проект)
-/mkdocs/
-/sphinx/
-/measure.py
-/measurements.csv
-/P2_report.md
-/T5_report.md
 # IDE / ОС
 .DS_Store
 .vscode/

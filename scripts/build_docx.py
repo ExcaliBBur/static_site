@@ -195,6 +195,7 @@ class Builder:
             hs.paragraph_format.space_before = Pt(12 if lvl > 1 else 0)
             hs.paragraph_format.space_after = Pt(6)
             hs.paragraph_format.keep_with_next = True
+        sec.different_first_page_header_footer = True  # без номера на титульном листе
         footer = sec.footer.paragraphs[0]
         footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
         add_field(footer, "PAGE", "1")
@@ -222,9 +223,13 @@ class Builder:
         p = d.add_paragraph()
         p.paragraph_format.space_before = Pt(120)
         p.paragraph_format.left_indent = Cm(9)
-        p.add_run("Выполнил: студент ____________\n").font.size = Pt(13)
-        p.add_run("(логин Helios s335989, GitHub ExcaliBBur)\n").font.size = Pt(11)
-        p.add_run("Преподаватель: ____________").font.size = Pt(13)
+        for text, size in (
+            ("Выполнил: студент группы Р4209\n", 13),
+            ("Павлов Александр Сергеевич\n\n", 13),
+            ("Преподаватель:\n", 13),
+            ("Жуков Николай Николаевич", 13),
+        ):
+            p.add_run(text).font.size = Pt(size)
         center("Санкт-Петербург, 2026", 13, before=110)
         d.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
 
