@@ -226,3 +226,53 @@ Actions. Вывод для workflow: стоит явно проверять, ч�
 ![Проваленный запуск helios](img/ci_helios_fail_no_secrets.png)
 
 *Проваленный запуск `helios`: rsync завершился кодом 255 (нет ключа).*
+
+## 12. Lighthouse: FCP 9,5 с у MkDocs на мобильном профиле
+
+**Симптом.** Первый запуск Lighthouse (workflow `lighthouse`, мобильный
+профиль с эмуляцией медленного 4G): MkDocs — `performance=40`,
+`first-contentful-paint=9.5 s`; Sphinx на той же странице — 71 и 1,0 с,
+хотя вес страниц почти одинаков (≈2,3 МиБ передано у обоих).
+
+**Гипотеза:** MathJax (`tex-svg.js`, 2 МиБ, 662 КиБ gzip) подключён в
+MkDocs синхронным `<script>`, и браузер не рисует страницу, пока не
+загрузит и не выполнит его. У Sphinx тот же файл подключён с `defer`.
+
+**Проверка:** в собранном HTML
+
+```text
+MkDocs: <script src="../assets/js/tex-svg.js">
+Sphinx: <script defer="defer" src="../_static/mathjax/tex-svg.js?v=50970ec6">
+```
+
+**Решение.** В `mkdocs.yml` для обоих скриптов MathJax задано
+`defer: true` (формат `extra_javascript` с `path:` поддерживается с
+MkDocs 1.5). Порядок выполнения `defer`-скриптов сохраняется, поэтому
+конфигурация применяется до загрузки MathJax; автоматическая проверка
+`measure.py` подтвердила, что все формулы по-прежнему отрисованы.
+Результат повторного замера — в P2, § 3.3.
+
+## 13. Замеры упёрлись в лимиты API
+
+**Симптомы.**
+
+```text
+PageSpeed Insights: 429 Quota exceeded for quota metric 'Queries' and
+limit 'Queries per day' of service 'pagespeedonline.googleapis.com'
+GitHub API:         HTTP Error 403: rate limit exceeded
+```
+
+**Гипотеза:** оба API вызывались без ключа. У PageSpeed Insights запросы
+без ключа идут в общую суточную квоту, исчерпанную другими пользователями;
+у GitHub API без токена лимит — 60 запросов в час на IP, и цикл ожидания
+завершения workflow (опрос каждые 15 с) исчерпал его за 15 минут.
+
+**Проверка:** тело ответа PSI явно называет квоту «Queries per day»;
+заголовок `X-RateLimit-Remaining: 0` у ответа GitHub.
+
+**Решение.** Lighthouse перенесён в CI: отдельный workflow `lighthouse`
+запускается после успешного `pages` (`workflow_run`) и выполняет
+`npx lighthouse@13.5.0` в Chrome раннера; результаты выводятся
+аннотациями, которые видны на публичной странице запуска. Ожидание
+завершения workflow переведено на чтение публичной веб-страницы Actions
+раз в 30 с (`scripts/wait_run.py`), на неё лимит API не распространяется.

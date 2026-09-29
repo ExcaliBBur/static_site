@@ -401,13 +401,6 @@ class Builder:
         for wf in WORKFLOWS:
             self.heading(wf, 2)
             self.code((ROOT / wf).read_text(encoding="utf-8").splitlines(), "yaml")
-        shots = sorted(CI_IMAGES.glob("ci_*.png"))
-        if shots:
-            self.page_break()
-            self.heading("Приложение Б. Скриншоты запусков CI", 1)
-            for shot in shots:
-                self.image(shot.name, shot.stem, CI_IMAGES)
-                self.caption(SHOT_CAPTIONS.get(shot.stem, shot.stem))
 
 
 SHOT_CAPTIONS: dict[str, str] = {}

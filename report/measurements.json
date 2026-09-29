@@ -2,48 +2,48 @@
   "builds": {
     "mkdocs": {
       "cold": [
-        1.0215193000622094,
-        1.0066810001153499,
-        1.000327399931848
+        1.5888795999344438,
+        0.9725022001657635,
+        0.9602504000067711
       ],
-      "cold_mean": 1.0095092333698024,
+      "cold_mean": 1.1738774000356595,
       "incremental": [
-        1.0167094999924302,
-        1.0355363001581281,
-        1.0148258998524398
+        0.9845565999858081,
+        0.9728099999483675,
+        0.9740313000511378
       ],
-      "incremental_mean": 1.0223572333343327,
-      "output_bytes": 17996979,
-      "output_files": 75
+      "incremental_mean": 0.9771326333284378,
+      "output_bytes": 18213362,
+      "output_files": 76
     },
     "sphinx": {
       "cold": [
-        2.4287697998806834,
-        2.401683900039643,
-        2.393487599911168
+        2.383440500125289,
+        2.407268400071189,
+        2.4349410999566317
       ],
-      "cold_mean": 2.407980433277165,
+      "cold_mean": 2.4085500000510365,
       "incremental": [
-        2.716481599956751,
-        1.619648199994117,
-        1.6021182998083532
+        2.6603229998145252,
+        1.5567270000465214,
+        1.570264299865812
       ],
-      "incremental_mean": 1.9794160332530737,
-      "output_bytes": 16156182,
-      "output_files": 72
+      "incremental_mean": 1.9291047665756196,
+      "output_bytes": 16658670,
+      "output_files": 77
     }
   },
   "pages": {
     "mkdocs": {
       "desktop": {
         "requests": 18,
-        "bytes": 7536583,
+        "bytes": 7558926,
         "bytes_by_type": {
           "document": 52362,
           "stylesheet": 153703,
           "image": 70741,
           "script": 7042847,
-          "xhr": 200265,
+          "xhr": 222608,
           "other": 16665
         },
         "external_requests": 2,
@@ -51,7 +51,7 @@
           "api.github.com"
         ],
         "blocked": 0,
-        "load_s": 1.288369899848476,
+        "load_s": 1.259254700038582,
         "math_rendered": 15,
         "math_unrendered": 0,
         "plotly_svg": 3,
@@ -60,13 +60,13 @@
       },
       "mobile": {
         "requests": 18,
-        "bytes": 7536585,
+        "bytes": 7558928,
         "bytes_by_type": {
           "document": 52362,
           "stylesheet": 153703,
           "image": 70741,
           "script": 7042847,
-          "xhr": 200267,
+          "xhr": 222610,
           "other": 16665
         },
         "external_requests": 2,
@@ -74,7 +74,7 @@
           "api.github.com"
         ],
         "blocked": 0,
-        "load_s": 0.8032369001302868,
+        "load_s": 0.8146328998263925,
         "math_rendered": 15,
         "math_unrendered": 0,
         "plotly_svg": 3,
@@ -83,19 +83,19 @@
       },
       "offline_cdn": {
         "requests": 16,
-        "bytes": 7534192,
+        "bytes": 7556535,
         "bytes_by_type": {
           "document": 52362,
           "stylesheet": 153703,
           "image": 70741,
           "script": 7042847,
-          "xhr": 197874,
+          "xhr": 220217,
           "other": 16665
         },
         "external_requests": 0,
         "external_hosts": [],
         "blocked": 2,
-        "load_s": 0.7328776000067592,
+        "load_s": 1.308693700004369,
         "math_rendered": 15,
         "math_unrendered": 0,
         "plotly_svg": 3,
@@ -116,7 +116,7 @@
         "external_requests": 0,
         "external_hosts": [],
         "blocked": 0,
-        "load_s": 1.200815999880433,
+        "load_s": 1.2043141999747604,
         "math_rendered": 8,
         "math_unrendered": 0,
         "plotly_svg": 3,
@@ -135,7 +135,7 @@
         "external_requests": 0,
         "external_hosts": [],
         "blocked": 0,
-        "load_s": 0.7778807000722736,
+        "load_s": 0.783585499972105,
         "math_rendered": 8,
         "math_unrendered": 0,
         "plotly_svg": 3,
@@ -154,7 +154,7 @@
         "external_requests": 0,
         "external_hosts": [],
         "blocked": 0,
-        "load_s": 0.8013896998018026,
+        "load_s": 0.7982193999923766,
         "math_rendered": 8,
         "math_unrendered": 0,
         "plotly_svg": 3,
