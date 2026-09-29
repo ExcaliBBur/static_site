@@ -1,0 +1,2 @@
+ci_pages_fail_no_pages	Проваленный запуск pages (Pages не включён): build успешен, deploy упал
+ci_helios_fail_no_secrets	Проваленный запуск helios (секреты не заданы): rsync/ssh — код 255

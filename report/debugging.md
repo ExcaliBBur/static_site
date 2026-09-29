@@ -179,3 +179,50 @@ Markdown **до** его разбора и не знает, что это фра
 **Решение.** Пример переписан словами. Ограничение плагина отмечено в
 сравнении P2: в Sphinx роль `{cite:p}` разбирается парсером и внутри кода
 не срабатывает.
+
+## 10. Первый деплой на GitHub Pages: `status: 404`
+
+**Текст ошибки** (аннотация job `deploy`, шаг `actions/deploy-pages`):
+
+```text
+Error: Failed to create deployment (status: 404) with build version 93a7b2c…
+Ensure GitHub Pages has been enabled: https://github.com/ExcaliBBur/static_site/settings/pages
+HttpError: Not Found … at createPagesDeployment (…/deploy-pages/…/src/internal/api-client.js:125:1)
+```
+
+Job `build` при этом прошёл полностью, включая healthcheck собранного сайта.
+
+**Гипотеза:** в репозитории не включён GitHub Pages: API создания
+Pages-деплоя отвечает 404, пока сайт Pages не создан.
+
+**Проверка:** `GET https://api.github.com/repos/ExcaliBBur/static_site`
+вернул `"has_pages": false`, а `GET …/pages` — `404 Not Found`.
+
+**Решение.** Settings → Pages → Source = **GitHub Actions**, затем
+повторный запуск workflow. Ошибка показывает, что проваленный deploy не
+портит уже опубликованный сайт: артефакт собран, но не выложен.
+
+![Проваленный запуск pages: build прошёл, deploy упал](img/ci_pages_fail_no_pages.png)
+
+*Проваленный запуск `pages`: job `build` успешен, `deploy` упал на `deploy-pages`.*
+
+## 11. Первый запуск `helios`: `exit code 255`
+
+**Текст ошибки:** шаг `Deploy with rsync` — `Process completed with exit code 255.`
+
+**Гипотеза:** код 255 возвращает `ssh`, а не `rsync` (у rsync свои коды
+1–35): соединение не установилось. Секреты `HELIOS_SSH_KEY` и
+`HELIOS_KNOWN_HOSTS` к этому моменту ещё не были заданы — в файл ключа
+записалась пустая строка.
+
+**Проверка:** шаг `Configure SSH` завершился успешно (пустой секрет —
+не ошибка для `printf`), падает первый шаг, который реально идёт в сеть.
+
+**Решение.** Секреты добавлены в Settings → Secrets and variables →
+Actions. Вывод для workflow: стоит явно проверять, что секрет не пуст
+(`test -n "$SSH_KEY"`), чтобы ошибка указывала на причину, а не на
+следствие.
+
+![Проваленный запуск helios](img/ci_helios_fail_no_secrets.png)
+
+*Проваленный запуск `helios`: rsync завершился кодом 255 (нет ключа).*

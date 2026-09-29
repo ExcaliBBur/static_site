@@ -1,5 +1,9 @@
 # Ход работы
 
+Отчёт целиком: [static_site_report.docx](static_site_report.docx) (Word) ·
+[static_site_report.pdf](static_site_report.pdf) (PDF). Тот же текст
+опубликован на страницах раздела «Отчёт» обоих сайтов.
+
 ## Ссылки
 
 | Ресурс | Адрес |
