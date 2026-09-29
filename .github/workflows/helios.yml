@@ -2,7 +2,9 @@
 #
 # Настройки репозитория (Settings → Secrets and variables → Actions):
 #   secrets.HELIOS_SSH_KEY      — приватный deploy-ключ (ed25519, без пароля),
-#                                 публичная часть — в ~/.ssh/authorized_keys на Helios
+#                                 публичная часть — в ~/.ssh/authorized_keys на Helios:
+#   restrict,command="/usr/local/sbin/rrsync /home/studs/s335989/public_html/p2/" ssh-ed25519 ...
+#                                 ключ позволяет только rsync в каталог сайта (путь "./")
 #   secrets.HELIOS_KNOWN_HOSTS  — вывод `ssh-keyscan -p 2222 se.ifmo.ru`,
 #                                 сверенный с отпечатком, полученным по доверенному каналу
 #   vars.HELIOS_USER            — логин на Helios (sXXXXXX)
@@ -23,7 +25,6 @@ concurrency:
 env:
   HELIOS_HOST: se.ifmo.ru
   HELIOS_PORT: "2222"
-  TARGET_DIR: public_html/p2
 
 jobs:
   deploy:
@@ -69,7 +70,7 @@ jobs:
           rsync -rlz --checksum --delete-after --delay-updates \
             --chmod=D755,F644 \
             -e "ssh -p $HELIOS_PORT -i ~/.ssh/helios -o StrictHostKeyChecking=yes -o IdentitiesOnly=yes" \
-            public/ "${{ vars.HELIOS_USER }}@$HELIOS_HOST:$TARGET_DIR/"
+            public/ "${{ vars.HELIOS_USER }}@$HELIOS_HOST:./"
 
       - name: Healthcheck
         run: python scripts/check_site.py "https://se.ifmo.ru/~${{ vars.HELIOS_USER }}/p2/" --commit "${GITHUB_SHA::7}"
