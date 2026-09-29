@@ -1,12 +1,12 @@
-"""Сборка отчёта в формате Word из тех же Markdown-файлов, что и сайты.
+"""Сборка краткого отчёта в формате Word.
 
-Источник: report/index.md, t5.md, p2.md, debugging.md, conclusion.md
-(единый текст для MkDocs, Sphinx и .docx) + приложение с текстами workflow.
-Поддерживается подмножество Markdown, используемое в отчёте: заголовки,
-абзацы, списки, таблицы, блоки кода, изображения, **жирный**, *курсив*,
-`код`, ссылки.
+Источник: docx/report.md — сжатая версия отчёта без скриншотов (полная
+версия со скриншотами опубликована на сайтах, report/*.md).
+Поддерживается подмножество Markdown: заголовки, абзацы, списки, таблицы,
+блоки кода, изображения, **жирный**, *курсив*, `код`, ссылки.
 
 Запуск: python scripts/build_docx.py  → report/static_site_report.docx
+Затем scripts/docx_finalize.ps1 обновляет оглавление в Word и делает PDF.
 """
 from __future__ import annotations
 
@@ -27,9 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "report"
 OUT = REPORT / "static_site_report.docx"
 TMP = ROOT / ".cache" / "docx"
-FILES = ["index.md", "t5.md", "p2.md", "debugging.md", "conclusion.md"]
-WORKFLOWS = [".github/workflows/pages.yml", ".github/workflows/helios.yml", ".github/workflows/vps.yml"]
-CI_IMAGES = REPORT / "img"
+SOURCE = ROOT / "docx" / "report.md"
 BODY_FONT = "Times New Roman"
 CODE_FONT = "Consolas"
 TEXT_WIDTH_CM = 16.5
@@ -181,7 +179,7 @@ class Builder:
         st.font.size = Pt(12)
         st.paragraph_format.space_after = Pt(4)
         st.paragraph_format.line_spacing = 1.15
-        for lvl, size in ((1, 16), (2, 14), (3, 12.5), (4, 12)):
+        for lvl, size in ((1, 14), (2, 13), (3, 12), (4, 12)):
             hs = self.doc.styles[f"Heading {lvl}"]
             hs.font.name = BODY_FONT
             hs.element.rPr.rFonts.set(qn("w:eastAsia"), BODY_FONT)
@@ -192,7 +190,7 @@ class Builder:
             hs.font.size = Pt(size)
             hs.font.bold = True
             hs.font.color.rgb = RGBColor(0, 0, 0)
-            hs.paragraph_format.space_before = Pt(12 if lvl > 1 else 0)
+            hs.paragraph_format.space_before = Pt(12)
             hs.paragraph_format.space_after = Pt(6)
             hs.paragraph_format.keep_with_next = True
         sec.different_first_page_header_footer = True  # без номера на титульном листе
@@ -239,7 +237,7 @@ class Builder:
         r.bold = True
         r.font.size = Pt(16)
         toc = d.add_paragraph()
-        add_field(toc, 'TOC \\o "1-2" \\h \\z \\u', "Оглавление обновится при открытии документа (F9).")
+        add_field(toc, 'TOC \\o "1-1" \\h \\z \\u', "Оглавление обновится при открытии документа (F9).")
 
     def page_break(self) -> None:
         self.doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
@@ -307,6 +305,8 @@ class Builder:
                 par = cells[ci].paragraphs[0]
                 par.paragraph_format.space_after = Pt(0)
                 par.paragraph_format.line_spacing = 1.0
+                # Короткие таблицы не разрываются между страницами
+                par.paragraph_format.keep_with_next = ri < len(rows) - 1
                 if re.fullmatch(r"[\d\s,./—%≈<>+-]+", txt.replace("**", "")) and ri > 0:
                     par.alignment = WD_ALIGN_PARAGRAPH.RIGHT
                 add_inline(par, txt, size=size, bold=(ri == 0))
@@ -314,6 +314,19 @@ class Builder:
                     set_cell_shading(cells[ci], "E8E8E4")
             if ri == 0:
                 repeat_header(t.rows[0])
+        # Ширина столбцов пропорциональна длине текста (корень сглаживает
+        # разницу), минимум 1,4 см; сумма — ширина области текста.
+        weights = [
+            max(math.sqrt(max(len(r[ci]) if ci < len(r) else 0 for r in rows)), 2.2)
+            for ci in range(ncols)
+        ]
+        total = sum(weights)
+        widths = [max(1.4, TEXT_WIDTH_CM * w / total) for w in weights]
+        scale = TEXT_WIDTH_CM / sum(widths)
+        t.autofit = False
+        for ci, w in enumerate(widths):
+            for cell in t.columns[ci].cells:
+                cell.width = Cm(w * scale)
         self.doc.add_paragraph().paragraph_format.space_after = Pt(2)
 
     # --- разбор файла ---
@@ -395,39 +408,14 @@ class Builder:
             i += 1
         flush()
 
-    def appendix(self) -> None:
-        self.page_break()
-        self.heading("Приложение А. Тексты workflow", 1)
-        self.paragraph(
-            "Полные тексты конфигураций CI/CD с комментариями. Все сторонние actions "
-            "зафиксированы по SHA коммита; секреты берутся из хранилища GitHub и в "
-            "репозитории отсутствуют."
-        )
-        for wf in WORKFLOWS:
-            self.heading(wf, 2)
-            self.code((ROOT / wf).read_text(encoding="utf-8").splitlines(), "yaml")
-
-
-SHOT_CAPTIONS: dict[str, str] = {}
-
-
 def main() -> None:
     b = Builder()
     b.title_page()
-    for k, name in enumerate(FILES):
-        text = (REPORT / name).read_text(encoding="utf-8")
-        text = text.replace("](debugging.md)", "](#)").replace("](../p2/stress-test.md)", "](#)")
-        b.markdown(text, REPORT, first_heading_break=True)
-    b.appendix()
+    b.page_break()
+    b.markdown(SOURCE.read_text(encoding="utf-8"), SOURCE.parent, first_heading_break=False)
     b.doc.save(OUT)
     print(OUT)
 
 
 if __name__ == "__main__":
-    captions_file = REPORT / "img" / "captions.txt"
-    if captions_file.exists():
-        for line in captions_file.read_text(encoding="utf-8").splitlines():
-            if "\t" in line:
-                key, cap = line.split("\t", 1)
-                SHOT_CAPTIONS[key] = cap
     main()

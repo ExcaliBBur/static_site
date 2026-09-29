@@ -1,7 +1,9 @@
 # Ход работы
 
-Отчёт целиком: [static_site_report.docx](static_site_report.docx) (Word) ·
-[static_site_report.pdf](static_site_report.pdf) (PDF). Тот же текст
+Краткий отчёт (без скриншотов, 7 страниц):
+[static_site_report.docx](static_site_report.docx){download="static_site_report.docx"} (Word) ·
+[static_site_report.pdf](static_site_report.pdf){download="static_site_report.pdf"} (PDF).
+Полная версия с замерами и скриншотами — на этой и следующих страницах. Тот же текст
 опубликован на страницах раздела «Отчёт» обоих сайтов.
 
 ## Ссылки
