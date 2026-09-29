@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Run Lighthouse (mobile + desktop, 2 generators)
+      - name: Run Lighthouse (3 runs × mobile/desktop × 2 generators)
         env:
           BASE: ${{ inputs.base_url || 'https://excalibbur.github.io/static_site/' }}
         run: |
@@ -45,10 +45,14 @@ jobs:
             path="p2/stress-test.html"; [ "$gen" = sphinx ] && path="sphinx/p2/stress-test.html"
             for form in mobile desktop; do
               preset=""; [ "$form" = desktop ] && preset="--preset=desktop"
-              npx --yes "lighthouse@$LIGHTHOUSE_VERSION" "$BASE$path" $preset \
-                --only-categories=performance,accessibility,best-practices,seo \
-                --chrome-flags="--headless=new --no-sandbox" \
-                --output=json --output-path="lh/${gen}_${form}.json" --quiet
+              # 3 прогона: Performance на мобильном профиле сильно «шумит»,
+              # в отчёт идёт медиана (lighthouse_summary.py)
+              for run in 1 2 3; do
+                npx --yes "lighthouse@$LIGHTHOUSE_VERSION" "$BASE$path" $preset \
+                  --only-categories=performance,accessibility,best-practices,seo \
+                  --chrome-flags="--headless=new --no-sandbox" \
+                  --output=json --output-path="lh/${gen}_${form}_${run}.json" --quiet
+              done
             done
           done
 
